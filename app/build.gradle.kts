@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.hilt.android)
     // Retrofit
     implementation(libs.retrofit2.retrofit)
+    implementation(libs.converter.gson)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
