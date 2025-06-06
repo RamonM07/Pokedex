@@ -9,13 +9,14 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 class LocationRepository @Inject constructor(
-    private val context: Context
+    @ApplicationContext private val context: Context
 ) {
 
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
