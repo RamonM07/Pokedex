@@ -1,7 +1,7 @@
 package com.pokemon.pokedex.data.remote.repository
 
 import com.pokemon.pokedex.data.PokemonApiService
-import com.pokemon.pokedex.data.getPokemon.GetPokemonRs
+import com.pokemon.pokedex.data.remote.model.getPokemon.GetPokemonRs
 import com.pokemon.pokedex.domain.repository.PokemonRepository
 
 class PokemonRepositoryImplement(

@@ -1,4 +1,4 @@
-package com.pokemon.pokedex.data.getPokemon
+package com.pokemon.pokedex.data.remote.model.getPokemon
 
 
 import com.google.gson.annotations.SerializedName

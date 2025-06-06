@@ -3,7 +3,7 @@ package com.pokemon.pokedex.presentation.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pokemon.pokedex.data.getPokemon.PokemonState
+import com.pokemon.pokedex.data.remote.model.getPokemon.PokemonState
 import com.pokemon.pokedex.domain.usesCase.GetPokemonUsesCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,10 +21,10 @@ class PokemonViewModel @Inject constructor(
     val pokemonState: StateFlow<PokemonState> = _pokemonState.asStateFlow()
 
     init {
-        getCharacters()
+        getPokemon()
     }
 
-    private fun getCharacters() {
+    fun getPokemon() {
         _pokemonState.value = PokemonState(isLoading = true)
         viewModelScope.launch {
             val id = (1..151).random()
@@ -42,6 +42,7 @@ class PokemonViewModel @Inject constructor(
                     )
                 }.onFailure {
                     Log.d("RESULT:: ", "${it.message}")
+                    _pokemonState.value = PokemonState(error = it.message)
                 }
         }
     }

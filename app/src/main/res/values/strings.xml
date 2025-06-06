@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pokedex</string>
+    <string name="title_button_see_pokemon">Mostrar Pokemón</string>
 </resources>

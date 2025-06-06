@@ -1,6 +1,6 @@
 package com.pokemon.pokedex.domain.usesCase
 
-import com.pokemon.pokedex.data.getPokemon.GetPokemonRs
+import com.pokemon.pokedex.data.remote.model.getPokemon.GetPokemonRs
 import com.pokemon.pokedex.domain.repository.PokemonRepository
 import javax.inject.Inject
 
