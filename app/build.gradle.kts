@@ -40,6 +40,10 @@ android {
 }
 
 dependencies {
+    // Dagger Hilt
+    implementation(libs.hilt.android)
+    // Retrofit
+    implementation(libs.retrofit2.retrofit)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
