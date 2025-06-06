@@ -1,10 +1,12 @@
 package com.pokemon.pokedex.presentation.viewModel
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pokemon.pokedex.data.remote.model.getPokemon.PokemonState
 import com.pokemon.pokedex.domain.usesCase.GetPokemonUsesCase
+import com.pokemon.pokedex.domain.usesCase.RequestLocationPermissionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonViewModel @Inject constructor(
-    private val getPokemonUsesCase: GetPokemonUsesCase
+    private val getPokemonUsesCase: GetPokemonUsesCase,
+    private val requestLocationPermissionUseCase : RequestLocationPermissionUseCase
 ) : ViewModel() {
 
     private val _pokemonState = MutableStateFlow(PokemonState())
@@ -22,6 +25,10 @@ class PokemonViewModel @Inject constructor(
 
     init {
         getPokemon()
+    }
+
+    fun checkAndRequestLocationPermission(activity: Activity): Boolean {
+        return requestLocationPermissionUseCase(activity)
     }
 
     fun getPokemon() {
