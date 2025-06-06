@@ -1,4 +1,4 @@
-package com.pokemon.pokedex
+package com.pokemon.pokedex.presentation.theme
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,7 +11,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.pokemon.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +20,7 @@ class MainActivity : ComponentActivity() {
             PokedexTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = "Pokedex",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
