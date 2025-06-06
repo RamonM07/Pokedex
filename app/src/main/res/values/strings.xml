@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Pokedex</string>
-    <string name="title_button_see_pokemon">Mostrar Pokemón</string>
+    <string name="title_button_see_pokemon">Mostrar Pokémon</string>
+    <string name="message_without_permissions">Sin permisos de ubicación</string>
+    <string name="message_pokemon_found">¡Pokémon encontrado!</string>
+    <string name="message_pokemon_not_found">No se encontró el Pokémon</string>
+    <string name="message_retry">Volver a buscar</string>
+    <string name="message_permissions_required">Para encontrar Pokémon cerca de ti, permite el acceso a tu ubicación.</string>
+    <string name="message_go_configuration">Ir a configuración</string>
+    <string name="message_cancel">Cancelar</string>
+
 </resources>

@@ -1,7 +1,6 @@
 package com.pokemon.pokedex.presentation.viewModel
 
 import android.location.Location
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pokemon.pokedex.data.remote.model.getPokemon.PokemonState
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,32 +25,32 @@ class PokemonViewModel @Inject constructor(
     private val _pokemonState = MutableStateFlow(PokemonState())
     val pokemonState: StateFlow<PokemonState> = _pokemonState.asStateFlow()
 
-    private val _locationState = MutableStateFlow<Location?>(null)
-    //val locationState: StateFlow<Location?> = _locationState
+    private var lastLocation : Location? = null
 
-    private val _eventFlow = MutableSharedFlow<String>()
-    val eventFlow = _eventFlow.asSharedFlow()
+    private val _showAlert = MutableSharedFlow<Unit>()
+    val showAlert = _showAlert.asSharedFlow()
 
-    fun onPokemonFound() {
+    private fun onPokemonFound() {
         viewModelScope.launch {
-            _eventFlow.emit("¡Encontraste un Pokémon")
+            _showAlert.emit(Unit)
         }
     }
 
-    fun observeLocation() {
+    fun onLocationPermissionGranted() {
+        observeLocation()
+    }
+
+    private fun observeLocation() {
         viewModelScope.launch {
             requestLocationPermissionUseCase()
-                .distinctUntilChanged { old, new ->
-                    Log.d("old:: ","${old.latitude}")
-                    Log.d("old:: ","${old.longitude}")
-                    Log.d("new:: ","${new.latitude}")
-                    Log.d("new:: ","${new.longitude}")
-                    old.distanceTo(new) < 9.9f
-                }
-                .collect { location ->
-                    _locationState.value = location
-                    getPokemon()
-                    onPokemonFound()
+                .filterNotNull()
+                .collect { newLocation ->
+                    if (lastLocation != null) {
+                        getPokemon()
+                        onPokemonFound()
+                    } else {
+                        lastLocation = newLocation
+                    }
                 }
         }
     }
@@ -72,12 +71,7 @@ class PokemonViewModel @Inject constructor(
                     } else {
                         _pokemonState.value = PokemonState(error = "Empty Result")
                     }
-                    Log.d(
-                        "RESULT:: ",
-                        "$result",
-                    )
                 }.onFailure {
-                    Log.d("RESULT:: ", "${it.message}")
                     _pokemonState.value = PokemonState(error = it.message)
                 }
         }

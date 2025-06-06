@@ -1,5 +1,6 @@
 package com.pokemon.pokedex.presentation.ui
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -11,7 +12,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.pokemon.pokedex.R
+import com.pokemon.pokedex.presentation.composables.NotFoundItem
 import com.pokemon.pokedex.presentation.composables.PokemonItem
 import com.pokemon.pokedex.presentation.viewModel.PokemonViewModel
 
@@ -26,8 +33,16 @@ fun PokemonScreen(
             .fillMaxSize()
             .padding(horizontal = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
-            style = MaterialTheme.typography.titleLarge,
-            text = "Pokedex",
+            text = stringResource(R.string.app_name),
+            fontSize = 32.sp,
+            color = MaterialTheme.colorScheme.secondary,
+            style = MaterialTheme.typography.titleLarge.copy(
+                shadow = Shadow(
+                    color = MaterialTheme.colorScheme.tertiary,
+                    offset = Offset(4f, 4f),
+                    blurRadius = 4f
+                )
+            ),
             modifier = modifier
         )
         when {
@@ -36,16 +51,18 @@ fun PokemonScreen(
             }
 
             pokemonState.error?.isNotEmpty() == true -> {
-                Text("Error in Service")
+                NotFoundItem {
+                    viewModel.getPokemon()
+                }
             }
 
             pokemonState.pokemon.name?.isNotEmpty() == true -> {
+                Log.d("POKEMON:: ","${pokemonState.pokemon}")
                 PokemonItem(
                     pokemon = pokemonState.pokemon,
                     onButtonClick = {
                         viewModel.getPokemon()
-                    },
-                    onSelectItem = {}
+                    }
                 )
             }
         }
