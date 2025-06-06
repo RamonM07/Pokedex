@@ -1,6 +1,5 @@
 package com.pokemon.pokedex.presentation.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -57,7 +56,6 @@ fun PokemonScreen(
             }
 
             pokemonState.pokemon.name?.isNotEmpty() == true -> {
-                Log.d("POKEMON:: ","${pokemonState.pokemon}")
                 PokemonItem(
                     pokemon = pokemonState.pokemon,
                     onButtonClick = {
